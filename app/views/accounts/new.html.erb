@@ -1,0 +1,66 @@
+<%= render 'layouts/header' %>
+<div class="lg:px-[80px] bg-white lg:bg-[unset]" data-controller="stepper">
+  <div class="rounded-t-[22px] bg-white lg:bg-[#F6F6F6] h-full">
+    <div class="px-[40px] py-[24px] border-b border-[rgba(0,0,0,0.1)]">
+      <p class="font-bold text-[18px] text-bnb_blue">Create Account</p>
+      <div class="flex text-[#6b7280] items-center mt-[4px]">
+        <i class="material-symbols-outlined mr-[6px] text-[20px]">info</i>
+      <p class="">
+      Please fill out all mandatory fields marked with ( <span class="text-bnb_red">*</span> ) </p>
+      </div>
+    </div>
+    <div class="h-full w-full">
+      <div class="lg:flex">
+        <div class="lg:w-[300px] h-[inherit] lg:border-r lg:border-[rgba(0,0,0,0.1)] lg:h-[calc(100vh-184px)] overflow-y-auto">
+          <div class="px-[24px] pt-[12px] lg:p-[24px]">
+            <% STEPS.each_with_index do |step, index| %>
+              <div class="lg:block" data-stepper-target="stepper">
+                <div class="flex justify-between items-center lg:block">
+                  <% unless index == 0 %>
+                    <i class="lg:!hidden material-symbols-outlined" data-action="click->stepper#previousStep">chevron_left</i>
+                  <% end %>
+                  <div class="flex items-center p-[16px] cursor-pointer rounded-[8px] hover:bg-[rgba(0,0,0,0.07)]"
+                    data-stepper-target="stepperDiv"
+                    data-action="click->stepper#randomStep"
+                    data-step=<%= index + 1 %>>
+                    <div
+                      class="flex items-center justify-center rounded-full border-2 border-bnb_blue h-[32px] w-[32px] mr-[12px]"
+                      data-stepper-target="stepperIcon"
+                      data-step=<%= index + 1 %>>
+                    </div>
+                    <p
+                      id="onboard-step<%= index + 1 %>"
+                      class="nav-link"
+                      type="button"
+                      style="color: #252D60;"
+                      data-step=<%= index + 1 %>>
+                        <%= step %></p>
+                  </div>
+                  <% unless index == STEPS.count - 1 %>
+                    <i class="lg:!hidden material-symbols-outlined ml-[8px]" data-action="click->stepper#nextStep">chevron_right</i>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="flex-1 px-[16px] pb-[16px] lg:py-[24px] lg:px-[40px] lg:h-[calc(100vh-184px)] overflow-y-auto">
+          <div class="p-3">
+            <%= form_with(url: accounts_path, method: :post, data: { action: "stepper#validateBeforeSubmit" }) do |f| %>
+              <%= hidden_field_tag :token, @token %>
+              <%= render "account_detail_form", f: f %>
+              <%= render "personal_detail_form", f: f %>
+              <%= render "addresses_form", f: f %>
+              <%= render "spouse_detail_form", f: f %>
+              <%= render "nominee_form", f: f %>
+              <%= render "employment_detail_form", f: f %>
+              <%= render "income_detail_form", f: f %>
+              <%= render "consent_liability", f: f %>
+              <%= render "privacy_policy" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

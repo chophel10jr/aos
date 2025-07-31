@@ -1,0 +1,50 @@
+<div class="h-screen relative"> 
+  <!--<img src="https://bnb.bt/wp-content/uploads/2024/11/border_pattern.png" alt="bg" class="absolute right-0 top-0 h-[200px] w-[200px] object-[69px_-68px]">
+  <img src="https://bnb.bt/wp-content/uploads/2024/11/border_pattern.png" alt="bg" class="absolute left -0 top-0 h-[200px] w-[200px] object-[-69px_-68px]">-->
+
+  <%= render 'layouts/header' %>
+  <div class="lg:flex justify-center mt-[28px]" data-controller="add-user">
+    <div class="lg:w-[600px] lg:bg-[rgb(247,250,253)] p-[32px] rounded-[16px] lg:shadow">
+      <h1 class="text-[22px] font-bold text-bnb_red text-center mb-[24px]">Create Users</h1>
+      <%= form_with(url: users_path, method: :post) do |form| %>
+        <p class="mb-[8px] font-bold">User Name</p>
+        <div class="form-group mb-[24px]">
+          <%= form.text_field :user_name, class: "form-input", placeholder: 'Enter user name', data: { action: "input->add-user#validateUserName" } %>
+          <%= form.label :user_name, 'Enter user name', class: 'form-label' %>
+          <span class="error-message" data-add-user-target="userNameError" style="color: red;"></span>
+        </div>
+
+        <p class="mb-[8px] font-bold">Email</p>
+        <div class="form-group mb-[24px]">
+          <%= form.email_field :email, class: "form-input", placeholder: ' ', data: { action: "input->add-user#validateEmail" } %>
+          <%= form.label :email, "Enter email", class: 'form-label' %>
+          <span class="error-message" data-add-user-target="userEmailError" style="color: red;"></span>
+        </div>
+
+        <p class="mb-[8px] font-bold">Password</p>
+        <div class="form-group bg-[24px]">
+          <%= form.password_field :password, class: 'form-input', placeholder: ' ', data: { action: "input->add-user#validatePassword" } %>
+          <%= form.label :password, "Enter password", class: 'form-label' %>
+          <span class="error-message" data-add-user-target="userPasswordError" style="color: red;"></span>
+        </div>
+
+        <p class="mb-[8px] font-bold">Branch</p>
+        <div class="form-group mb-[24px]">
+          <%= form.select :branch, options_for_select(BRANCH, selected: 'Corporate Branch'), {}, { class: "form-select" } %>
+        </div>
+
+        <p class="mb-[8px] font-bold">Role</p>
+        <div class="form-group mb-[24px]">
+          <%= form.select :role, options_for_select(ROLE, selected: 'Inputer'), {}, { class: "form-select" } %>
+        </div>
+
+        <div>
+          <%= form.submit "Submit", class: 'btn-blue-bnb w-full mt-[24px] disabled', id: "submit-user-form-button" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+  <!--<img src="https://bnb.bt/wp-content/uploads/2024/11/border_pattern.png" alt="bg" class="absolute right-0 bottom-0 h-[200px] w-[200px] object-[69px_68px]">
+  <img src="https://bnb.bt/wp-content/uploads/2024/11/border_pattern.png" alt="bg" class="left-0 bottom-0 absolute h-[200px] w-[200px] object-[-69px_68px]">-->
+</div>

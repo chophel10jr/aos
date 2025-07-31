@@ -1,0 +1,97 @@
+<div id="onboard-step3-content" class="hidden">
+  <p class="text-[18px] font-bold mb-[16px]">Permanent Address</p>
+  <div class="lg:grid lg:grid-cols-2 lg:gap-x-[24px]">
+    <div>
+      <p class="mb-[8px]">Dzongkhag <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['permanent_address']['dzongkhag'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Dungkhag</p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['permanent_address']['dungkhag'] || '-' %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Gewog <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['permanent_address']['gewog'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Village <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['permanent_address']['village'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">House No <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['permanent_address']['house_number'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Thram NO <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['permanent_address']['thram_number'] %></p>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-[18px] font-bold mb-[16px]">Current Address</p>
+  <div class="lg:grid lg:grid-cols-2 lg:gap-x-[24px]">
+    <div>
+      <p class="mb-[8px]">Country <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['current_address']['country'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">State <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['current_address']['state'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">City <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['current_address']['city'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Street <span class="text-bnb_red">*</span></p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['current_address']['street'] %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden lg:flex justify-end space-x-[16px] mt-[28px]">
+    <button
+      id="onboard-step3-previous"
+      class="btn-blue-bnb flex items-center"
+      type="button"
+      data-action="click->stepper#previousStep">
+      <i class="material-symbols-outlined !text-[20px] text-white mr-[8px]">chevron_left</i>
+      Previous
+    </button>
+
+    <button
+      id="onboard-step3-next"
+      class="btn-blue-bnb flex items-center !pl-[24px] !pr-[14px]"
+      type="button"
+      data-action="click->stepper#nextStep">
+      Next
+      <i class="material-symbols-outlined !text-[20px] text-white ml-[8px]">chevron_right</i>
+    </button>
+  </div>
+</div>

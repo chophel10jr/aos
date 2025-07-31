@@ -1,0 +1,47 @@
+ <%= render 'layouts/header' %>
+  <div class="p-[32px]" data-controller="manage-user">
+    <div class="flex justify-between items-center mb-4">
+      <p class="text-lg font-semibold text-gray-800">User Lists</p>
+      <%= button_to "Add User", new_user_path, method: :get, class: "bg-[rgb(37,45,96)] cursor-pointer text-white font-bold py-2 px-4 rounded hover:bg-[rgb(30,40,85)]" %>
+    </div>
+    <div>
+      <table class="w-full">
+        <thead>
+          <tr class="bg-[rgba(0,0,0,0.09)]">
+            <th class="text-left px-[24px] py-[18px]">Sl No.</th>
+            <th class="text-left px-[24px] py-[18px]">User Name</th>
+            <th class="text-left px-[24px] py-[18px]">Email</th>
+            <th class="text-left px-[24px] py-[18px]">Branch</th>
+            <th class="text-left px-[24px] py-[18px]">Role</th>
+            <th class="text-left px-[24px] py-[18px] text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each_with_index do |user, index| %>
+            <tr class="border-b border-[rgba(0,0,0,0.09)]">
+              <td class="pr-[24px] pl-[32px] py-[18px] text-gray-700"><%= index + 1 %></td>
+              <td class="px-[24px] py-[18px] text-gray-700"><%= user.user_name %></td>
+              <td class="px-[24px] py-[18px] text-gray-700"><%= user.email %></td>
+              <td class="px-[24px] py-[18px] text-gray-700"><%= user.branch %></td>
+              <td class="px-[24px] py-[18px] text-gray-700"><%= user.role.name.capitalize %></td>
+              <td class="px-[24px] py-[18px] text-gray-700">
+                <div class="flex space-x-[12px] items-center justify-center">
+                  <%= link_to edit_user_path(user.id), 
+                    class: "flex justify-center items-center border-2  border-bnb_blue h-[42px] w-[42px] rounded-full" do %>
+                    <i class="material-symbols-outlined text-bnb_red !text-[20px]">edit</i>
+                  <% end %>
+
+                  <%= link_to user_path(user.id),
+                    method: :delete,
+                    class: "flex justify-center items-center border-2  border-bnb_blue h-[42px] w-[42px] rounded-full",
+                    data: { action: "click->manage-user#confirmDelete" } do %>
+                    <i class="material-symbols-outlined text-bnb_red !text-[20px]">delete</i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>

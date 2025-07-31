@@ -1,0 +1,60 @@
+<%= render 'layouts/header' %>
+<div class="flex justify-center" data-controller="track-application">
+  <div class="w-full lg:w-[700px] p-[32px]">
+    <% if @account.present? %>
+      <div class="mt-[24px] px-[28px] py-[24px] border border-gray-300 rounded-[8px]">
+        <div class="border-b border-gray-300">
+          <p class="mb-[20px]">
+          >> Your application is <span class="<%= status_color(@account.status) %> py-[4px] px-[8px] text-white text-[13px] rounded-full mb-[8px]"><%= @account.status.capitalize %></span>
+        </p>
+        </div>
+
+        <table class="w-full mt-[24px]">
+          <tr>
+            <td class="text-left pb-[16px]">
+              Applicant CID Number:
+            </td>
+            <td class="text-left pb-[16px]">
+                <%= get_cid(@account).id_number %>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-left pb-[16px]">Applicant Name:</td>
+            <td class="text-left pb-[16px]"><%= format_name(@account) %></td>
+          </tr>
+          <tr>
+            <td class="text-left pb-[16px]">Account Number:</td>
+            <td class="text-left pb-[16px]"><%= @account.account_number %></td>
+          </tr>
+
+          <tr>
+            <td class="text-left pb-[16px]">Date of Application:</td>
+            <td class="text-left pb-[16px]"><%= @account.created_at.strftime("%d/%m/%Y") %></td>
+          </tr>
+
+          <tr>
+            <td class="text-left pb-[16px]">Application updated Date:</td>
+            <td class="text-left pb-[16px]"><%= @account.updated_at.strftime("%d/%m/%Y") %></td>
+          </tr>
+
+          <tr>
+            <td class="text-left pb-[16px]">Remarks:</td>
+            <td class="text-left pb-[16px]"><%= @account.remarks %></td>
+          </tr>
+
+          <tr>
+            <td class="text-left pb-[16px]">Status:</td>
+            <td class="text-left pb-[16px]"><span class="<%= status_color(@account.status) %> py-[4px] px-[8px] text-white text-[13px] rounded-full mb-[8px]"><%= @account.status.capitalize %></span></td>
+          </tr>
+        </table>
+      </div>
+    <% elsif @account != nil %>
+      <div class="flex justify-center mt-[24px] py-[80px] px-[16px] border border-gray-300 rounded-[8px]">
+        <div class="text-center">
+          <i class="material-symbols-outlined text-bnb_red text-[55px]">file_copy_off</i>
+          <p class="text-gray-600 lg:w-[400px] mt-[8px]">No account found for the entered CID. Please double-check the CID and try again.</p>
+        </div>              
+      </div>
+    <% end %>
+  </div>
+</div>

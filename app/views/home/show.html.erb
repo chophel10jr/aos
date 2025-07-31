@@ -1,0 +1,58 @@
+<%= render 'layouts/header' %>
+<div class="h-screen"> 
+  <div class="lg:flex justify-center">
+    <div class="lg:w-[600px] p-[32px] rounded-[16px]">
+      <div class="w-full">
+        <div class="text-center">
+          <h1 class="text-2xl font-bold text-bnb_blue mb-4">
+            Welcome to<br>
+            BNB's Online Account Opening Portal
+          </h1>
+          <p class="text-gray-500 mb-[28px]">Please select an option below to proceed.</p>
+        </div>
+        <%= link_to open_account_path,
+          class: "ndi-btn w-full flex justify-center items-center space-x-[10px]",
+          id: "sign-up-with-ndi-button", 
+          style: 'border-radius: 10px!important;' do %>
+          <img src="https://bnb.bt/wp-content/uploads/2024/11/ndi_nobg.png" alt="ndi logo" height="28" width="28">
+          <span>Open an account</span>
+        <% end %>
+      </div>
+
+      <div class="flex items-center mt-[32px]">
+        <div class="flex-1 border-b border-gray-300"></div>
+        <p class="font-bold text-bnb_blue">OR</p>
+        <div class="flex-1 border-b border-gray-300"></div>
+      </div>
+
+      <div class="w-full mt-[32px]">
+        <%= link_to track_application_path, 
+          class: "ndi-btn w-full flex justify-center items-center space-x-[10px]",
+          id: "track-application-button", 
+          style: 'border-radius: 10px!important;' do %>
+          <img src="https://bnb.bt/wp-content/uploads/2024/11/ndi_nobg.png" alt="ndi logo" height="28" width="28">
+          <span>Track your application</span>
+        <% end %>
+      </div>
+
+      <div class="mt-8 mx-auto text-left">
+        <p class="text-gray-500 mb-2">
+          To open an account, please add the following <strong>Self Attested Credentials</strong> in the Bhutan NDI App:
+        </p>
+        <ul class="text-gray-500 list-decimal list-inside text-left mx-auto mb-2 pl-10">
+          <li>Passport-Size Photo</li>
+          <li>Current Address</li>
+          <li>Phone Number</li>
+          <li>Email Address</li>
+        </ul>
+        <p class="text-gray-500 mb-2">
+          And, please ensure you have the following documents scanned and ready for upload:
+        </p>
+        <ul class="text-gray-500 list-decimal list-inside text-left mx-auto pl-10">
+          <li>A copy of your CID</li>
+          <li>A clear and legible Signature</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

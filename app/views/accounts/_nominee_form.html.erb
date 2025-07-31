@@ -1,0 +1,126 @@
+<div id="onboard-step5-content" class="hidden">
+  <div data-controller="nominees">
+    <div id="nominees-container" data-nominees-target="container" data-stepper-target="nomineesContainer">
+      <%# OBO is acepting only one nominee %>
+      <div class="flex justify-between items-center my-[16px]">
+         <p class="text-[18px] font-bold mb-[16px]">Nominees</p>
+        <%# <button data-action="click->nominees#addNominee"
+                data-nominees-target="addNomineeButton" type="button" class="btn-blue-bnb-outline flex items-center" id="add-nominee">
+          <i class="material-symbols-outlined !text-[20px] text-bnb_blue mr-[8px]">add</i>
+          Add Nominee</button> %>
+      </div>
+
+      <div class="nominee-form border border-[rgba(0,0,0,0.1)] rounded-[8px] p-[16px] my-[16px]">
+        <div class="flex justify-end">
+          <i class="material-symbols-outlined !text-[20px] cursor-pointer text-bnb_blue mr-[8px] remove-nominee"
+          title="This will remove nominee la" data-action="click->nominees#removeNominee">close</i>
+        </div>
+        <div class="lg:grid lg:grid-cols-2 lg:gap-x-[24px]">
+          <%= f.fields_for :nominee do |n| %>
+            <div>
+              <p class="mb-[8px]">Name of Nominee <span class="text-bnb_red">*</span> </p>
+              <div class="form-group mb-[24px]">
+                <%= n.text_field :name, { class: "form-input", placeholder: ' ', data: { action: "input->nominees#validateName" } } %>
+                <%= n.label :name, "Name of Nominee", { class: 'form-label' }%>
+                <span class="error-message" data-nominees-target="nameError" style="color: red;"></span>
+              </div>
+            </div>
+
+            <div>
+              <p class="mb-[8px]">DOB <span class="text-bnb_red">*</span> </p>
+              <div class="form-group mb-[24px]">
+                <%= n.date_field :date_of_birth, { class: "form-date", data: { action: "input->nominees#validateDOB" } } %>
+                <span class="error-message" data-nominees-target="dobError" style="color: red;"></span>
+              </div>
+            </div>
+
+            <div>
+              <p class="mb-[8px]">Relationship <span class="text-bnb_red">*</span> </p>
+              <div class="form-group mb-[24px]">
+                <%= n.select :relationship, options_for_select(NOMINEES_RELATIONSHIP, selected: 'Other'), {}, { class: "form-select" } %>
+              </div>
+            </div>
+
+            <div>
+              <p class="mb-[8px]">CID <span class="text-bnb_red">*</span> </p>
+              <div class="form-group mb-[24px]">
+                <%= n.text_field :cid_number,
+                  { class: "form-input", placeholder: " ", data: { action: "input->nominees#validateCID" } } %>
+                <%= n.label :cid, "CID", { class: 'form-label' } %>
+                <span class="error-message" data-nominees-target="cidError" style="color: red;"></span>
+              </div>
+            </div>
+
+            <div>
+              <p class="mb-[8px]">Nominee Contact Number <span class="text-bnb_red">*</span> </p>
+              <div class="form-group mb-[24px]">
+                <%= n.text_field :contact_number,
+                  { class: "form-input", placeholder: " ", data: { action: "input->nominees#validateContactNumber" } } %>
+                <%= n.label :contact_no, "Contact Number", { class: 'form-label' } %>
+                <span class="error-message" data-nominees-target="contactError" style="color: red;"></span>
+              </div>
+            </div>
+
+            <div>
+              <p class="mb-[8px]">Share percentage <span class="text-bnb_red">*</span> </p>
+              <div class="form-group mb-[24px]">
+                <%= n.number_field :share_percentage,
+                  { value: 100,
+                    class: "form-input share-percentage",
+                    min: 0,
+                    max: 100,
+                    data: { nominees_target: "sharePercentage", action: "input->nominees#validateSharePercentages" }
+                  } %>
+                <%= n.label :share_percentage, "Share Percentage", { class: 'form-label' } %>
+                <span class="error-message" data-nominees-target="shareError" style="color: red;"></span>
+              </div>
+            </div>
+          <% end %>  
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-[16px]">
+        <p>The nominee/s above shall have the following rights:</p>
+        <ol class="list-decimal ml-[40px] my-[16px]">
+          <li class="my-[12px]">
+            He/she has the absolute right to close any of the accounts or claim for contents in Safe
+            Deposit Locker.
+          </li>
+          <li>
+             He/she also has the right to withdraw the balances lying therein, after the adjustment of any 
+             outstanding/s with this bank & receive the contents in the Safe deposit Locker
+          </li>
+        </ol>
+        <p>
+          I have read and understood the procedure for legal claim from my Deposit accounts maintained
+          with this Bank. This Bank shall not be liable, once the payment/contents are made/delivered to the
+          nominee as per the nomination details provided/declared above.
+        </p>
+        <p class="font-bold mt-[16px]">
+          You can revise this list at any time during the tenure of the account, by providing a written
+          application to the bank
+        </p>
+      </div>
+  </div>
+
+  <div class="hidden lg:flex justify-end space-x-[16px] mt-[28px]">
+    <button
+      id="onboard-step5-previous"
+      class="btn-blue-bnb flex items-center"
+      type="button"
+      data-action="click->stepper#previousStep">
+      <i class="material-symbols-outlined !text-[20px] text-white mr-[8px]">chevron_left</i>
+      Previous
+    </button>
+
+    <button
+      id="onboard-step5-next"
+      class="btn-blue-bnb flex items-center !pl-[24px] !pr-[14px]"
+      type="button"
+      data-action="click->stepper#nextStep">
+      Next
+      <i class="material-symbols-outlined !text-[20px] text-white ml-[8px]">chevron_right</i>
+    </button>
+  </div>
+</div>

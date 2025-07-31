@@ -1,0 +1,44 @@
+<div class="h-screen relative"> 
+  <%= render 'layouts/header' %>
+  <div class="lg:flex justify-center mt-[28px]" data-controller="update-user">
+    <div class="lg:w-[600px] lg:bg-[rgb(247,250,253)] p-[32px] rounded-[16px] lg:shadow">
+      <h1 class="text-[22px] font-bold text-bnb_red text-center mb-[24px]">Edit Users</h1>
+      <%= form_with(url: user_path, method: :put) do |form| %>
+        <p class="mb-[8px] font-bold">User Name</p>
+        <div class="form-group mb-[24px]">
+          <%= form.text_field :user_name, value: @user.user_name, class: "form-input", placeholder: 'Enter user name', data: { action: "input->update-user#validateUserName", update_user_target: "userName" } %>
+          <%= form.label :user_name, 'Enter user name', class: 'form-label' %>
+          <span class="error-message" data-update-user-target="userNameError" style="color: red;"></span>
+        </div>
+
+        <p class="mb-[8px] font-bold">Email</p>
+        <div class="form-group mb-[24px]">
+          <%= form.email_field :email, value: @user.email, class: "form-input", placeholder: ' ', data: { action: "input->update-user#validateEmail", update_user_target: "email" } %>
+          <%= form.label :email, "Enter email", class: 'form-label' %>
+          <span class="error-message" data-update-user-target="userEmailError" style="color: red;"></span>
+        </div>
+
+        <p class="mb-[8px] font-bold">Password</p>
+        <div class="form-group bg-[24px]">
+          <%= form.password_field :password, class: 'form-input', placeholder: ' ', data: { action: "input->update-user#validatePassword", update_user_target: "password" } %>
+          <%= form.label :password, "Enter password", class: 'form-label' %>
+          <span class="error-message" data-update-user-target="userPasswordError" style="color: red;"></span>
+        </div>
+
+        <p class="mb-[8px] font-bold">Branch</p>
+        <div class="form-group mb-[24px]">
+          <%= form.select :branch, options_for_select(BRANCH, selected: @user.branch), {}, { class: "form-select", data: { action: "change->update-user#enableUpdateButton", update_user_target: "branch" } } %>
+        </div>
+
+        <p class="mb-[8px] font-bold">Role</p>
+        <div class="form-group mb-[24px]">
+          <%= form.select :role, options_for_select(ROLE, selected: @user.role.name.capitalize), {}, { class: "form-select", data: { action: "change->update-user#enableUpdateButton", update_user_target: "role" } } %>
+        </div>
+
+        <div>
+          <%= form.submit "Submit", class: 'btn-blue-bnb w-full mt-[24px] disabled', id: "submit-update-user-form-button" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

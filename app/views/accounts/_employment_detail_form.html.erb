@@ -1,0 +1,110 @@
+<div id="onboard-step6-content" class="hidden" data-controller="employment-detail" data-stepper-target="employmentDetailContainer">
+  <p class="text-[18px] font-bold mb-[16px]">Employment Details</p>
+  <p class="mb-[8px]">Employment Status <span class="text-bnb_red">*</span> </p>
+  <%= f.fields_for :employment_detail do |e| %>
+    <div class="form-group mb-[24px]">
+      <%= e.select :employment_status,
+        options_for_select(EMPLOYMENT_STATUS),
+        {},
+        { class: "form-select",
+          name: "employment_detail[employment_status]",
+          data: { action: "change->employment-detail#toggleEmploymentDetails" }
+        } %>
+    </div>
+
+    <div id="employee-details" class="employee-details hidden" data-employment-detail-target="employeeDetail">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-x-[24px]">
+        <div>
+          <p class="mb-[8px]">Employment Type <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= e.select :employment_type,
+              options_for_select(EMPLOYMENT_TYPE, selected: 'Government'),
+              {},
+              { class: "form-select", name: "employment_detail[employment_type]" } %>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Employee Type <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= e.select :employee_type,
+              options_for_select(EMPLOYEE_TYPE),
+              {},
+              { class: "form-select", name: "employment_detail[employee_type]" } %>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Employee ID</p>
+          <div class="form-group mb-[24px]">
+            <%= e.text_field :employee_id,
+              { class: "form-input",
+                placeholder: ' ',
+                name: "employment_detail[employee_id]",
+                data: { employment_detail_target: "employeeId" } 
+              } %>
+            <%= e.label :employee_id, "Employee ID", { class: 'form-label' } %>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Organization Name <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= e.text_field :organization_name,
+              { class: "form-input", placeholder: ' ',
+                name: "employment_detail[organization_name]",
+                data: { employment_detail_target: "organizationName", action: "input->employment-detail#validateOrganizationName" } } %>
+            <%= e.label :organization_name, "Organization Name", { class: 'form-label' } %>
+            <span class="error-message" data-employment-detail-target="organizationNameError" style="color: red;"></span>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Organization Address <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= e.text_field :organization_address,
+              { class: "form-input",
+                placeholder: ' ',
+                name: "employment_detail[organization_address]",
+                data: { employment_detail_target: "organizationAddress", action: "input->employment-detail#validateOrganizationAddress" } } %>
+            <%= e.label :organization_address, "Organization Address", { class: 'form-label' } %>
+            <span class="error-message" data-employment-detail-target="organizationAddressError" style="color: red;"></span>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Current Designation <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= e.text_field :designation,
+              { class: "form-input",
+                placeholder: ' ',
+                name: "employment_detail[designation]",
+                data: { employment_detail_target: "designation", action: "input->employment-detail#validateDesignation" } } %>
+            <%= e.label :designation, "Current Designation", { class: 'form-label' } %>
+            <span class="error-message" data-employment-detail-target="designationError" style="color: red;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="hidden lg:flex justify-end space-x-[16px] mt-[28px]">
+    <button
+      id="onboard-step6-previous"
+      class="btn-blue-bnb flex items-center"
+      type="button"
+      data-action="click->stepper#previousStep">
+      <i class="material-symbols-outlined !text-[20px] text-white mr-[8px]">chevron_left</i>
+      Previous
+    </button>
+
+    <button
+      id="onboard-step6-next"
+      class="btn-blue-bnb flex items-center !pl-[24px] !pr-[14px]"
+      type="button"
+      data-action="click->stepper#nextStep">
+      Next
+      <i class="material-symbols-outlined !text-[20px] text-white ml-[8px]">chevron_right</i>
+    </button>
+  </div>
+</div>

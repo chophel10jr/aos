@@ -1,0 +1,121 @@
+<div id="onboard-step4-content" class="hidden" data-controller="spouse" data-stepper-target="spouseDetailContainer">
+  <p class="text-[18px] font-bold mb-[16px]">Spouse Detail</p>
+  <p class="mb-[8px]">Marital Status <span class="text-bnb_red">*</span> </p>
+  <%= f.fields_for :spouse_detail do |s| %>
+    <div class="form-group mb-[24px]">
+      <%= s.select :marital_status,
+        options_for_select(MARITAL_STATUS),
+        {},
+        { class: "form-select",
+          name: "spouse_detail[marital_status]",
+          data: { action: "change->spouse#toggleSpouseDetails" }
+        } %>
+    </div>
+
+    <div id="spouse-details" class="spouse-details" data-spouse-target="spouseDetails" style="display: none;">
+      <div class="lg:grid lg:grid-cols-2 gap-x-[24px]">
+        <div>
+          <p class="mb-[8px]">Name of Spouse <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= s.text_field :name, { class: "form-input", placeholder: ' ', name: "spouse_detail[name]" } %>
+            <%= s.label :name, "Name of Spouse", { class: 'form-label' } %>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">CID of Spouse <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= s.text_field :cid_number,
+              { class: "form-input",
+                placeholder: ' ',
+                name: "spouse_detail[cid_number]",
+                data: { action: "input->spouse#validateCID"}
+              } %>
+            <%= s.label :cid, "CID of Spouse", { class: 'form-label' } %>
+            <span class="error-message" data-spouse-target="cidError" style="color: red;"></span>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Contact Number of Spouse <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= s.text_field :contact_number,
+              { class: "form-input",
+                placeholder: ' ',
+                name: "spouse_detail[contact_number]",
+                data: { action: "input->spouse#validateContactNumber"}
+              } %>
+            <%= s.label :contact_no, "Contact Number of Spouse", { class: 'form-label' } %>
+            <span class="error-message" data-spouse-target="contactError" style="color: red;"></span>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Education status of Spouse <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= s.select :education_level,
+              options_for_select(EDUCATION),
+              {},
+              { class: "form-select", name: "spouse_detail[education_level]" } %>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Employment Detail <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= s.select :employment_status,
+              options_for_select(EMPLOYMENT_STATUS),
+              {},
+              { class: "form-select", name: "spouse_detail[employment_status]" } %>
+          </div>
+        </div>
+
+        <div>
+          <p class="mb-[8px]">Spouse has BNB Account <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= s.select :has_bnb_account,
+              options_for_select([:No, :Yes]),
+              {},
+              { class: "form-select",
+                name: "spouse_detail[has_bnb_account]",
+                data: { action: "change->spouse#toggleBnbAccount" }
+              } %>
+          </div>
+        </div>
+
+        <div class="hidden" data-spouse-target="spouseBnbAccount">
+          <p class="mb-[8px]">BNB Account Number <span class="text-bnb_red">*</span> </p>
+          <div class="form-group mb-[24px]">
+            <%= s.number_field :account_number,
+              { placeholder: " ",
+                class: 'form-input',
+                name: "spouse_detail[account_number]",
+                data: { action: "input->spouse#validateBnbAccount"}
+              } %>
+            <%= s.label :bnb_account_no, "BNB Account Number", { class: 'form-label' } %>
+            <span class="error-message" data-spouse-target="bnbAccountError" style="color: red;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="hidden lg:flex space-x-[16px] justify-end mt-[28px]">
+    <button
+      id="onboard-step4-previous"
+      class="btn-blue-bnb flex items-center"
+      type="button"
+      data-action="click->stepper#previousStep">
+      <i class="material-symbols-outlined !text-[20px] text-white mr-[8px]">chevron_left</i>
+      Previous
+    </button>
+    <button
+      id="onboard-step4-next"
+      class="btn-blue-bnb flex items-center !pl-[24px] !pr-[14px]"
+      type="button"
+      data-action="click->stepper#nextStep">
+      Next
+      <i class="material-symbols-outlined !text-[20px] text-white ml-[8px]">chevron_right</i>
+    </button>
+  </div>
+</div>

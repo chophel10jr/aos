@@ -1,0 +1,64 @@
+<div class="flex justify-center items-center lg:h-[unset]"
+  data-controller="ndi-status"
+  data-ndi-status-token-value="<%= @token %>"
+  data-ndi-status-source-value="<%= source %>">
+
+  <div class="h-[100svh] lg:h-[unset] text-center flex flex-col w-full lg:w-[600px] p-[32px] bg-white items-center lg:rounded-[22px] text-[14px]">
+    <div data-ndi-status-target="loader"
+         class="hidden flex items-center justify-center space-x-3 mb-[16px] text-[#F40000] text-[16px]">
+      <svg class="animate-spin h-5 w-5 text-[#F40000]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+      </svg>
+      <span>Waiting for NDI data...</span>
+    </div>
+
+    <p class="font-bold text-[18px]">Scan with <span style="color:#5AC994">Bhutan NDI</span> Wallet</p>
+
+    <div class="w-full lg:hidden my-[30px]">
+      <button onclick="window.location.href='<%= @deep_link_url %>'"
+        class="ndi-btn2 space-x-[10px]">Open Bhutan NDI Wallet</button>
+    </div>
+
+    <div class="lg:hidden flex items-center w-full space-x-[8px]">
+      <div class="border-t-[0.5px] border-gray-200 flex-1"></div>
+      <p class="font-bold text-[#A1A0A0]">OR</p>
+      <div class="border-t-[0.5px] border-gray-200 flex-1"></div>
+    </div>
+
+    <div class="qr-code-outline relative">
+      <div class="flex items-center justify-center absolute inset-0 z-10">
+        <img src="https://bnb.bt/wp-content/uploads/2024/12/ndi_logo.png" alt="ndi logo" height="46" width="46">
+      </div>
+      <%= raw @svg_qr_code %>
+    </div>
+
+    <ol class="list-decimal mx-[16px] mt-[24px] text-[#A1A0A0]">
+      <li class="text-left">Open Bhutan NDI Wallet on your phone</li>
+      <span class="flex">
+        <li class="flex-1 text-left">Tap the Scan button located on the menu bar and capture code</li>
+        <span class="w-[32px] h-[32px] bg-[#5AC994] ml-[8px] mb-[18px] rounded-full">
+          <img src="https://bnb.bt/wp-content/uploads/2024/08/ndi_scan.png" class="w-full h-auto">
+        </span>
+      </span>
+    </ol>
+
+    <button class="btn ndi-btn-2 flex space-x-[8px] items-center mt-[30px]">
+      <a href="https://www.youtube.com/@BhutanNDI" target="_blank" class="flex items-center space-x-[8px]">
+        <span>Watch video guide</span>
+        <i class="material-symbols-outlined !text-[20px]">play_circle</i>
+      </a>
+    </button>
+
+    <p class="font-bold text-[#A1A0A0] my-[30px]">Download Now!</p>
+    <div class="flex space-x-[16px] mt-[10px]">
+      <a href="https://play.google.com/store/search?q=bhutan+ndi&c=apps&hl=en_IN&gl=US&pli=1" target="_blank">
+        <img src="https://bnb.bt/wp-content/uploads/2020/09/Google-Play-Badge.svg" alt="google play store" class="h-[40px]">
+      </a>
+      <a href="https://apps.apple.com/in/app/bhutan-ndi/id1645493166" target="_blank">
+        <img src="https://bnb.bt/wp-content/uploads/2020/09/App-Store-Badge.svg" alt="apple app store" class="h-[40px]">
+      </a>
+    </div>
+  </div>
+</div>

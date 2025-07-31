@@ -1,0 +1,31 @@
+<div class="h-screen relative"> 
+  <!--<img src="https://bnb.bt/wp-content/uploads/2024/11/border_pattern.png" alt="bg" class="absolute right-0 top-0 h-[200px] w-[200px] object-[69px_-68px]">
+  <img src="https://bnb.bt/wp-content/uploads/2024/11/border_pattern.png" alt="bg" class="absolute left -0 top-0 h-[200px] w-[200px] object-[-69px_-68px]">-->
+
+  <%= render 'layouts/header' %>
+  <div class="lg:flex justify-center mt-[28px]">
+    <div class="lg:w-[600px] lg:bg-[rgb(247,250,253)] p-[32px] rounded-[16px] lg:shadow">
+      <h1 class="text-[22px] font-bold text-bnb_red text-center mb-[24px]">Login</h1>
+      <%= form_with(url: login_path, method: :post) do |form| %>
+              
+        <p class="mb-[8px]">Email</p>
+        <div class="form-group mb-[24px]">
+          <%= form.email_field :email, class: "form-input", placeholder: ' ' %>
+          <%= form.label :email, "Email", class: 'form-label' %>
+        </div>
+
+        <p class="mb-[8px]">Password</p>
+        <div class="form-group bg-[24px]">
+          <%= form.password_field :password, class: 'form-input', placeholder: ' ' %>
+          <%= form.label :password, "Password", class: 'form-label' %>
+        </div>
+
+        <div>
+          <%= form.submit "Login", class: 'btn-blue-bnb w-full mt-[24px]' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!--<img src="https://bnb.bt/wp-content/uploads/2024/11/border_pattern.png" alt="bg" class="absolute right-0 bottom-0 h-[200px] w-[200px] object-[69px_68px]">
+  <img src="https://bnb.bt/wp-content/uploads/2024/11/border_pattern.png" alt="bg" class="left-0 bottom-0 absolute h-[200px] w-[200px] object-[-69px_68px]">-->
+</div>

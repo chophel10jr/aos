@@ -1,0 +1,180 @@
+<div id="onboard-step2-content" class="hidden" data-controller="personal-detail">
+  <p class="text-[18px] font-bold mb-[16px]">Personal Detail</p>
+  <% name_parts = NameParserService.new(@ndi_user['foundational_id']['full_name']).run %>
+  <div class="lg:grid lg:grid-cols-2 lg:gap-x-[24px]" data-stepper-target="personalDetailContainer">
+    <div class="lg:grid lg:grid-cols-5 lg:gap-x-[24px]">
+      <div class="col-span-2">
+        <% image_data = @ndi_user['passport_size_photo']['passport_size_photo'].to_s.gsub("\n", "") %>
+        <% if image_data.present? %>
+          <div class="profile-picture-wrapper">
+            <img src="<%= raw(image_data) %>" alt="Profile Picture" class="profile-picture" />
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-span-3">
+        <p class="mb-[8px]">Salutation <span class="text-bnb_red">*</span> </p>
+        <div class="form-group mb-[24px]">
+          <p class="form-input readonly-field"><%= SalutationService.new(@ndi_user['foundational_id']['gender']).run %></p>
+        </div>
+
+        <p class="mb-[8px]">Gender <span class="text-bnb_red">*</span> </p>
+        <div class="form-group mb-[24px]">
+          <p class="form-input readonly-field"><%= @ndi_user['foundational_id']['gender'] %></p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Name <span class="text-bnb_red">*</span> </p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['foundational_id']['full_name'] %></p>
+      </div>
+
+      <p class="mb-[8px]">Date of Birth <span class="text-bnb_red">*</span> </p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['foundational_id']['date_of_birth'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Nationality <span class="text-bnb_red">*</span> </p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field">Bhutanese</p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Email ID <span class="text-bnb_red">*</span> </p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['email']['email'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">Contact Number <span class="text-bnb_red">*</span> </p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['mobile_number']['mobile_number'] %></p>
+      </div>
+    </div>
+
+    <div>
+      <p class="mb-[8px]">CID Number <span class="text-bnb_red">*</span> </p>
+      <div class="form-group mb-[24px]">
+        <p class="form-input readonly-field"><%= @ndi_user['foundational_id']['id_number'] %></p>
+      </div>
+    </div>
+    <%= f.fields_for :personal_detail do |pd| %>
+      <div>
+        <p class="mb-[8px]">CID Card Issued On <span class="text-bnb_red">*</span> </p>
+        <div class="form-group mb-[24px]">
+          <%= pd.date_field :cid_issued_on,
+            { class: "form-date",
+              name: "personal_detail[cid_issued_on]",
+              data: { personal_detail_target: "issueDate", action: "input->personal-detail#validateIssueAndExpireDate" } } %>
+          <span class="error-message" data-personal-detail-target="issuedOnError" style="color: red;"></span>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-[8px]">CID Card Expires On <span class="text-bnb_red">*</span> </p>
+        <div class="form-group mb-[24px]">
+          <%= pd.date_field :cid_expires_on,
+            { class: "form-date",
+              name: "personal_detail[cid_expires_on]",
+              data: { personal_detail_target: "expireDate", action: "input->personal-detail#validateIssueAndExpireDate" } } %>
+          <span class="error-message" data-personal-detail-target="expiresOnError" style="color: red;"></span>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-[8px]">Tax Payer No</p>
+        <div class="form-group mb-[24px]">
+          <%= pd.text_field :tax_payer_no, { class: "form-input", name: "personal_detail[tax_payer_no]", placeholder: " " } %>
+          <%= pd.label :tax_payer_no, "Tax Payer No", { class: 'form-label mb-2' } %>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-[8px]">Fixed Line No</p>
+        <div class="form-group mb-[24px]">
+          <%= pd.text_field :fixed_line_no, { class: "form-input", name: "personal_detail[fixed_line_no]", placeholder: " " } %>
+          <%= pd.label :fixed_line_no, "Fixed Line No", { class: 'form-label mb-2' } %>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-[8px]">Education <span class="text-bnb_red">*</span> </p>
+        <div class="form-group mb-[24px]">
+          <%= pd.select :education_level,
+            options_for_select(EDUCATION),
+            {},
+            { class: "form-select", name: "personal_detail[education_level]" } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:grid lg:grid-cols-2 lg:gap-x-[24px]" data-stepper-target="personalDetailUploadContainer">
+      <div class="mt-[8px]">
+        <span class="error-message" data-personal-detail-target="signatureError" style="color: red;"></span>
+        <label for="signature" class="flex items-center justify-center cursor-pointer border-2 border-dashed
+        border-bnb_blue relative rounded-[8px] h-[156px] mb-[4px]">
+          <div class="absolute inset-0 flex flex-col justify-center items-center">
+            <i class="material-symbols-outlined !text-[44px] text-bnb_red transform -rotate-[12deg]">signature</i>
+            <p class="mb-[8px] text-gray-500 mt-[12px] text-center">
+              Signature (PNG, JPG, max 2 MB)
+            </p>
+            <p class="text-bnb_blue text-[14px] mt-[8px]" id="signature-path"></p>
+
+          </div>
+          <%= pd.file_field :signature,
+            { id: "signature",
+              class: 'hidden',
+              name: "personal_detail[signature]",
+              data: { action: "input->personal-detail#validateSignature" } }%>
+        </label>
+        <img src="" alt="signature" height="110" width="110" class="object-contain absolute inset-0 hidden rounded-[8px]" data-personal-detail-target="signatureImage">
+      </div>
+
+      <div class="mt-[8px]">
+        <span class="error-message" data-personal-detail-target="cidCopyError" style="color: red;"></span>
+        <label for="cid_copy" class="flex items-center justify-center cursor-pointer border-2 border-dashed
+        border-bnb_blue relative rounded-[8px] h-[156px] mb-[4px]">
+          <div class="absolute inset-0 flex flex-col justify-center items-center">
+            <i class="material-symbols-outlined !text-[44px] text-bnb_red transform -rotate-[12deg]">badge</i>
+            <p class="mb-[8px] text-gray-500 mt-[12px] text-center">
+              CID copy both front and back (PNG, JPG, max 2 MB)
+            </p>
+            <p class="text-bnb_blue text-[14px] mt-[8px]" id="cid-copy-path"></p>
+
+          </div>
+          <%= pd.file_field :cid_copy,
+            { id: "cid_copy",
+              class: 'hidden',
+              name: "personal_detail[cid_copy]",
+              data: { action: "input->personal-detail#validateCidCopy" } }%>
+        </label>
+        <img src="" alt="cid-copy" height="110" width="110" class="object-contain absolute inset-0 hidden rounded-[8px]" data-personal-detail-target="cidCopyImage">
+      </div>
+    </div>
+    <% end %>
+
+  <div class="hidden lg:flex justify-end space-x-[16px] mt-[28px]">
+    <button
+      id="onboard-step2-previous"
+      class="btn-blue-bnb flex items-center"
+      type="button"
+      data-action="click->stepper#previousStep">
+      <i class="material-symbols-outlined !text-[20px] text-white mr-[8px]">chevron_left</i>
+      Previous
+    </button>
+    <button
+      id="onboard-step2-next"
+      class="btn-blue-bnb flex items-center !pl-[24px] !pr-[14px]"
+      type="button"
+      data-action="click->stepper#nextStep">
+      Next
+      <i class="material-symbols-outlined !text-[20px] text-white ml-[8px]">chevron_right</i>
+    </button>
+  </div>
+</div>

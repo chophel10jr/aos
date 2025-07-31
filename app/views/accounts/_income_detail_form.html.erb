@@ -1,0 +1,43 @@
+<div id="onboard-step7-content" class="hidden", data-controller="income-detail", data-stepper-target="incomeDetailContainer">
+  <p class="text-[18px] font-bold mb-[16px]">Income Detail</p>
+  <p class="mb-[8px]">Source of Income <span class="text-bnb_red">*</span> </p>
+  <%= f.fields_for :income do |i| %>
+    <div class="form-group mb-[24px]">
+      <%= i.select :source_of_income,
+        options_for_select(SOURCE_OF_INCOME),
+        {},
+        { class: "form-select", name: "income[source_of_income]" } %>
+    </div>
+
+    <p class="mb-[8px]">Gross Annual Income <span class="text-bnb_red">*</span> </p>
+    <div class="form-group mb-[24px]">
+      <%= i.number_field :gross_annual_income,
+        { class: "form-input",
+          placeholder: ' ',
+          name: "income[gross_annual_income]",
+          data: { action: "input->income-detail#validateGrossIncome"} } %>
+      <%= i.label :gross_annual_income, "Gross Annual Income", { class: 'form-label' } %>
+      <span class="error-message" data-income-detail-target="grossIncomeError" style="color: red;"></span>
+    </div>
+  <% end %>
+
+  <div class="hidden lg:flex justify-end space-x-[16px] mt-[28px]">
+    <button
+      id="onboard-step7-previous"
+      class="btn-blue-bnb flex items-center"
+      type="button"
+      data-action="click->stepper#previousStep">
+      <i class="material-symbols-outlined !text-[20px] text-white mr-[8px]">chevron_left</i>
+      Previous
+    </button>
+    
+    <button
+      id="onboard-step7-next"
+      class="btn-blue-bnb flex items-center !pl-[24px] !pr-[14px]"
+      type="button"
+      data-action="click->stepper#nextStep">
+      Next
+      <i class="material-symbols-outlined !text-[20px] text-white ml-[8px]">chevron_right</i>
+    </button>
+  </div>
+</div>

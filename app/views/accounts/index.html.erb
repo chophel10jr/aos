@@ -1,0 +1,210 @@
+<%= render 'layouts/header' %>
+<div class="lg:px-[80px] lg:py-[30px] bg-white lg:bg-[unset]" data-controller="accounts">
+  <div class="rounded-t-[22px] bg-white lg:bg-[#F6F6F6] h-full">
+    <div class="px-[40px] py-[24px] border-b border-[rgba(0,0,0,0.1)] flex justify-between items-center ">
+      <p class="font-bold text-[18px] text-bnb_blue">Saving Account lists</p>
+      <div class="flex space-x-[12px] items-center ">
+        <% if current_user.admin? %>
+          <%= link_to users_path, method: :get, class: 'btn-blue-bnb-outline !py-[8px] flex items-center' do %>
+            <i class="material-symbols-outlined !text-[20px] text-bnb_blue mr-[8px]">manage_accounts</i>
+            Manage User</button>
+          <% end %>
+        <% end %>
+        <%= link_to logout_path, method: :delete, class: 'flex items-center' do %>
+          Sign out
+          <i class="material-symbols-outlined text-bnb_blue text-[28px] cursor-pointer ml-[8px]">logout</i>
+        <% end %>
+      </div>
+    </div>
+    <div class="h-full w-full">
+      <div class="lg:flex">
+        <div class="lg:w-[450px] h-[inherit] lg:border-r lg:border-[rgba(0,0,0,0.1)] lg:h-[calc(100vh-184px)] overflow-y-auto">
+          <div class="px-[24px] pt-[12px] lg:p-[24px]">
+            <div class="flex flex-wrap mb-[20px]">
+              <a href="/accounts?status=all" class="chip py-[8px] px-[12px] mr-[12px] <%= @status == 'all' ? 'bg-bnb_blue text-white' : 'bg-[#e0e0e0]' %> cursor-pointer text-[14px] rounded-full mb-[8px]">All</a>
+              <a href="/accounts?status=inprogress" class="chip py-[8px] px-[12px] mr-[12px] <%= @status == 'inprogress' ? 'bg-bnb_blue text-white' : 'bg-[#e0e0e0]' %> cursor-pointer text-[14px] rounded-full mb-[8px]">In Progress</a>
+              <a href="/accounts?status=approved" class="chip py-[8px] px-[12px] mr-[12px] <%= @status == 'approved' ? 'bg-bnb_blue text-white' : 'bg-[#e0e0e0]' %> cursor-pointer text-[14px] rounded-full mb-[8px]">Approved</a>
+              <a href="/accounts?status=rejected" class="chip py-[8px] px-[12px] mr-[12px] <%= @status == 'rejected' ? 'bg-bnb_blue text-white' : 'bg-[#e0e0e0]' %> cursor-pointer text-[14px] rounded-full mb-[8px]">Rejected</a>
+            </div>
+            <% @accounts.each_with_index do |account, index| %>
+              <div class="lg:block mb-[8px]" data-accounts-target="stepper">
+                <div class="flex justify-between items-center lg:block">
+                  <div class="flex items-center p-[16px] cursor-pointer rounded-[8px] hover:bg-[rgb(37,45,96)] hover:text-white" data-accounts-target="stepperDiv">
+                    <button
+                      id="onboard-step<%= index + 1 %>"
+                      class="nav-link"
+                      type="button"
+                      style="" data-action="click->accounts#randomStep", data-step=<%= index + 1 %>>
+                        <%= index + 1 %>: <%= format_name(account) %>, <%= account.identity_details&.first&.id_number %></button>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <% if @accounts.blank? %>
+              <div class="flex justify-center mt-[80px]">
+                <div class="text-center">
+                  <i class="material-symbols-outlined text-bnb_red text-[55px]">file_copy_off</i>
+                  <p class="text-gray-600">This list is empty</p>
+                </div>              
+              </div>
+            <% end %>
+          </div>
+        </div>
+        
+        <div class="flex-1 px-[16px] pb-[16px] lg:py-[24px] lg:px-[40px] lg:h-[calc(100vh-184px)] overflow-y-auto">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-4">
+            <!-- Sort Dropdown -->
+            <div>
+              <label for="sort" class="mr-2 font-medium">Sort by Date:</label>
+              <select id="sort" name="sort" class="border rounded px-2 py-1"
+                      onchange="location.href='?sort=' + this.value + '<%= '&status=' + params[:status] if params[:status].present? %>'">
+                <option value="latest" <%= params[:sort] == 'latest' ? 'selected' : '' %>>Latest First</option>
+                <option value="oldest" <%= params[:sort] == 'oldest' ? 'selected' : '' %>>Oldest First</option>
+              </select>
+            </div>
+
+            <!-- Search Form -->
+            <div class="mb-4">
+              <%= form_with url: request.path, method: :get, local: true, class: "flex items-center" do %>
+                <input type="text" name="search" placeholder="Search by CID Number"
+                      value="<%= params[:search] %>"
+                      class="border rounded px-2 py-1 mr-2" />
+                <input type="hidden" name="sort" value="<%= params[:sort] %>" />
+                <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
+                <%= submit_tag "Search", class: "bg-bnb_blue text-white px-4 py-1 rounded" %>
+              <% end %>
+            </div>
+
+            <!-- Pagination -->
+            <% if @accounts.total_pages > 1 %>
+              <nav>
+                <ul class="flex items-center space-x-2">
+                  <!-- Backward Arrow -->
+                  <li class="<%= 'hidden' unless @accounts.previous_page %>">
+                    <%= link_to url_for(page: @accounts.previous_page, status: params[:status], sort: params[:sort]) do %>
+                      <i class="material-symbols-outlined">chevron_left</i>
+                    <% end if @accounts.previous_page %>
+                  </li>
+
+                  <!-- Current Page Info -->
+                  <li class="text-sm">Page <%= @accounts.current_page %> of <%= @accounts.total_pages %></li>
+
+                  <!-- Forward Arrow -->
+                  <li class="<%= 'hidden' unless @accounts.next_page %>">
+                    <%= link_to url_for(page: @accounts.next_page, status: params[:status], sort: params[:sort]) do %>
+                      <i class="material-symbols-outlined">chevron_right</i>
+                    <% end if @accounts.next_page %>
+                  </li>
+                </ul>
+              </nav>
+            <% end %>
+          </div>
+
+          <% @accounts.each_with_index do |account, index| %>
+            <div class="hidden" data-accounts-target="stepperDetail">
+              <div class="p-3">
+                <p class="font-bold">Application Number: <%= account.obo_application_no %></p>
+
+                <p class="font-bold mt-[24px]">Account Details</p>
+                <div class="flex flex-wrap">
+                  <% account_detail(account).each do |accDetails| %>
+                  <p class="mr-[12px]"><%= accDetails[:label] %>: <%= accDetails[:value] %>,</p>
+                <% end %> 
+                </div>
+
+                <p class="font-bold mt-[24px]">Nominees</p>
+                <% nominees_detail(account).each do |nominee| %>
+                  <div class="flex flex-wrap mb-[12px]">
+                    <span>1. </span> <% nominee.each do |accDetails| %>
+                    <p class="mr-[12px]"><%= accDetails[:label] %>: <%= accDetails[:value] %>,</p>
+                  <% end %>
+                  </div>
+                <% end %>
+
+                <p class="font-bold mt-[24px]">Personal Details</p>
+                <div class="flex flex-wrap">
+                <% personal_detail(account).each do |personalDetails| %>
+                  <p class="mr-[12px]"><%= personalDetails[:label] %>: <%= personalDetails[:value] %>,</p>
+                <% end %> 
+                </div>
+                <p class="mt-[20px] font-bold">Documents</p>
+                <div class="flex space-x-[28px] mt-[8px]">
+                  <% account.account_documents.each do |document| %>
+                    <% raw_data = document['base64_data'].to_s.gsub("\n", "") %>
+                    <% cleaned_data = raw_data.sub(/^data:image\/png;base64,/, '') %>
+                    <% if cleaned_data.present? %>
+                      <% data_uri = "data:image/png;base64,#{cleaned_data}" %>
+                      <img src="<%= data_uri %>" alt="Document Image" class="max-w-[300px]" />
+                    <% end %>
+                  <% end %>
+                </div>
+
+                <p class="font-bold mt-[24px]">Permanent Address</p>
+                <div class="flex flex-wrap">
+                <% permanent_address(account).each do |permanentAddress| %>
+                  <p class="mr-[12px]"><%= permanentAddress[:label] %>: <%= permanentAddress[:value] %>,</p>
+                <% end %> 
+                </div>
+
+
+                <p class="font-bold mt-[24px]">Employment Detail</p>
+                <div class="flex flex-wrap">
+                <% employment_detail(account).each do |employeeDetails| %>
+                  <p class="mr-[12px]"><%= employeeDetails[:label] %>: <%= employeeDetails[:value] %>,</p>
+                <% end %> 
+                </div>
+
+                <p class="font-bold mt-[24px]">Income Detail</p>
+                <div class="flex flex-wrap">
+                <% income_detail(account).each do |incomeDetails| %>
+                  <p class="mr-[12px]"><%= incomeDetails[:label] %>: <%= incomeDetails[:value] %>,</p>
+                <% end %> 
+                </div>
+
+                <p class="font-bold mt-[24px]">Spouse Detail</p>
+                <div class="flex flex-wrap">
+                <% spouse_detail(account).each do |spouseDetails| %>
+                  <p class="mr-[12px]"><%= spouseDetails[:label] %>: <%= spouseDetails[:value] %>,</p>
+                <% end %> 
+                </div>
+
+                <p class="font-bold mt-[24px]">Current Address</p>
+                <div class="flex flex-wrap">
+                <% current_address_detail(account).each do |address| %>
+                  <p class="mr-[12px]"><%= address[:label] %>: <%= address[:value] %>,</p>
+                <% end %>
+                </div>
+              </div>
+
+              <%= form_with model: account, url: account_path(account), method: :patch, local: true do |f| %>
+                <div class="mb-4 pl-3">
+                  <%= f.label :account_number, "Account Number", class: "block text-gray-700 font-bold mb-2" %>
+                  <%= f.text_field :account_number, class: "w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[rgb(37,45,96)]" %>
+                </div>
+
+                <div class="mb-4 pl-3">
+                  <%= f.label :remarks, "Remarks", class: "block text-gray-700 font-bold mb-2" %>
+                  <%= f.text_area :remarks, rows: 3, class: "w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[rgb(37,45,96)]" %>
+                </div>
+
+                <div class="mb-4 pl-3">
+                  <%= f.label :status, "Status", class: "block text-gray-700 font-bold mb-2" %>
+                  <%= f.select :status, options_for_select([['Approved', 'approved'], ['In Progress', 'inprogress'], ['Rejected', 'rejected']], account.status), 
+                    {}, 
+                    class: "w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[rgb(37,45,96)]" %>
+                </div>
+
+                <div class="pl-3 flex">
+                  <%= f.submit "Update Account", class: "bg-[rgb(37,45,96)] text-white font-bold py-2 px-4 rounded hover:bg-[rgb(30,40,85)]" %>
+                  <% unless account.obo_application_no.present? || account.status != "inprogress" %>
+                    <%= link_to "Push to OBO", sync_account_with_obo_path(id: account.id), method: :post, class: "bg-[rgb(37,45,96)] text-white font-bold py-2 px-4 rounded hover:bg-[rgb(30,40,85)] ml-2", data: { confirm: "Are you sure you want to sync this account?" } %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

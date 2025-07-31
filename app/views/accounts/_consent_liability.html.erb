@@ -1,0 +1,79 @@
+<div id="onboard-step8-content" class="hidden" data-controller="">
+  <p class="text-[18px] font-bold mb-[16px]">Consent & Liability Declaration </p>
+  <p>
+    I/We hereby confirm that the information provided on this form is true and accurate to the best of my/our
+    knowledge, at this time, and shall be fully liable if proven otherwise.
+  </p>
+  <p class="my-[12px]">
+    I/We undertake to promptly inform Bhutan National Bank Ltd (the "Bank") of any changes to my/
+    our KYC details or other information, the information provided will be accurate, adequate and
+    up-to-date. I/We understand and consent that failure to update KYC details when required may
+    result in restriction of account operations.
+  </p>
+  <p class="my-[12px]">
+    I/We have read and understood the Terms & Conditions and hereby agree to be bound by the rules
+    and regulations governing the maintenance of accounts with the Bhutan National Bank Ltd (the Bank) in
+    force and as amended by the Bank and/or the Royal Monetary Authority of Bhutan from time to time.
+  </p>
+  <p class="my-[12px]">
+    Accordingly, I/We fully agree to pay any such amount/s wrongly credited in my/our account, to
+    the rightful owner/the Bank. I/we also hereby authorize the bank with the right to lien note
+    my/our account against cheques/debit authority presented for payment to the Bank, recovery of
+    non-performing assets, overdrawn accounts, disputed transactions, properties for seizure and in line
+    with court order/s. I/we confirm that I/we shall be absolutely and completely liable for any misuse
+    of the accounts/cards opened/issued in/to my/our name.
+  </p>
+  <p class="my-[12px]">
+    I/We agree to use my/our bank accounts solely for intended and lawful purposes. I/We commit not to
+    rent, share, or allow third parties to use my/our bank accounts for whatsoever reasons. I/We accept full
+    liability for any unlawful use of my/our accounts, including but not limited to
+    receiving, transferring, or holding illicit funds. I/We acknowledge that any such unlawful
+    funds may be confiscated by authorities in accordance with applicable Regulations/Laws.
+  </p>
+  <p class="my-[12px]">
+    I/We acknowledge that permitting third parties to use my/our bank accounts for any reason may result in
+    immediate account deactivation if detected by the Bank. I/We understand that breaching these terms may
+    result in criminal prosecution and/or civil penalties as prescribed by the regulatory authority and laws of
+    the Kingdom.
+  </p>
+  <p class="my-[12px]">
+    I/We hereby grant explicit consent for the collection, use, storage, and sharing of my/our personal data as
+    described in the Privacy Policy. This information may be used for service-related or
+    marketing communications, enhancing and personalizing my/our customer experience with
+    BNBL, and for compliance with legal and regulatory obligations.
+  </p>
+
+  <div class="flex items-center space-x-[8px] mt-[24px]">
+    <input 
+    type="checkbox" 
+    id="liability-check" 
+    name="liability-check" 
+    value="1"
+    class="h-[16px] w-[16px] cursor-pointer bg-white border border-gray-300 rounded checked:bg-[rgb(37,45,96)] 
+    checked:text-white checked:border-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-[rgb(37,45,96)]"
+  />
+  <label for="liability-check" class="text-gray-700">
+    I accept the liability terms and conditions.
+  </label>
+  </div>
+
+  <div class="hidden lg:flex justify-end space-x-[16px] mt-[28px]">
+    <button
+      id="onboard-step8-previous"
+      class="btn-blue-bnb flex items-center"
+      type="button"
+      data-action="click->stepper#previousStep">
+      <i class="material-symbols-outlined !text-[20px] text-white mr-[8px]">chevron_left</i>
+      Previous
+    </button>
+
+    <button
+      id="onboard-step8-next"
+      class="btn-blue-bnb flex items-center !pl-[24px] !pr-[14px]"
+      type="button"
+      data-action="click->stepper#nextStep">
+      Next
+      <i class="material-symbols-outlined !text-[20px] text-white ml-[8px]">chevron_right</i>
+    </button>
+  </div>
+</div>

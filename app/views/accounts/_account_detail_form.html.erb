@@ -1,0 +1,47 @@
+<div id="onboard-step1-content">
+  <p class="text-[18px] font-bold mb-[16px]">Account Details</p>
+  <%= f.fields_for :account do |a| %>
+    <p class="mb-[8px]">Branch <span class="text-bnb_red">*</span></p>
+    <div class="form-group mb-[24px]">
+      <%= a.select :branch_code,
+        options_for_select(BRANCH, selected: 'Corporate Branch'),
+        {},
+        { class: "form-select readonly-field", name: "account[branch_code]", readonly: true } %>
+    </div>
+
+    <p class="mb-[8px]">Account Type <span class="text-bnb_red">*</span></p>
+    <div class="form-group mb-[24px]">
+      <%= a.select :account_type,
+        options_for_select(ACCOUNT_TYPE, selected: 'Pensioners Saving'),
+        {},
+        { class: "form-select readonly-field", name: "account[account_type]", readonly: true } %>
+    </div>
+
+    <p class="mb-[8px]">Currency <span class="text-bnb_red">*</span></p>
+    <div class="form-group mb-[24px]">
+      <%= a.select :currency,
+        options_for_select(CURRENCIES, selected: 'Nu'),
+        {},
+        { class: "form-select readonly-field", name: "account[currency]", readonly: true } %>
+    </div>
+
+    <p class="mb-[8px]">Mode of Operation <span class="text-bnb_red">*</span></p>
+    <div class="form-group mb-[24px]">
+      <%= a.select :mode_of_operation,
+        options_for_select(MODE_OF_OPERATION, selected: 'Single'),
+        {},
+        { class: "form-select readonly-field", name: "account[mode_of_operation]", readonly: true }  %>
+    </div>
+  <% end %>
+  
+  <div class="hidden lg:flex justify-end mt-[28px]">
+    <button
+      id="onboard-step1-next"
+      class="btn-blue-bnb flex items-center !pl-[24px] !pr-[14px]"
+      type="button"
+      data-action="click->stepper#nextStep">
+      Next
+      <i class="material-symbols-outlined !text-[20px] text-white ml-[8px]">chevron_right</i>
+    </button>
+  </div>
+</div>
