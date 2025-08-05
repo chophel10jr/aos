@@ -102,10 +102,10 @@ module AccountsHelper
   def current_address_detail(account)
     current_address = account.addresses.where(address_type: 'current').first
     [
-      {label: 'Country', value: current_address['country']},
-      {label: 'City', value: current_address['district']},
-      {label: 'State', value: current_address['sub_district']},
-      {label: 'Village', value: current_address['village']}
+      { label: 'Country', value: current_address&.[]('country') || 'N/A' },
+      { label: 'City', value: current_address&.[]('district') || 'N/A' },
+      { label: 'State', value: current_address&.[]('sub_district') || 'N/A' },
+      { label: 'Village', value: current_address&.[]('village') || 'N/A' }
     ]
   end
 
