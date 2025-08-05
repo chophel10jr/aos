@@ -104,7 +104,7 @@
             <div class="hidden" data-accounts-target="stepperDetail">
               <div class="p-3">
                 <p class="font-bold">Application Number: <%= account.obo_application_no %></p>
-
+                <p class="font-bold mt-[24px]">Application Date: <%= account.created_at.strftime("%B %d, %Y") %></p>
                 <p class="font-bold mt-[24px]">Account Details</p>
                 <div class="flex flex-wrap">
                   <% account_detail(account).each do |accDetails| %>
