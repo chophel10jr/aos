@@ -45,7 +45,7 @@ module OboHelper
   end
 
   def get_income(income, type)
-    if income[:source].downcase == type
+    if income[:source_of_income].downcase == type
       income[:gross_annual_income].to_i
     else
       0

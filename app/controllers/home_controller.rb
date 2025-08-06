@@ -44,8 +44,7 @@ class HomeController < ApplicationController
           "Date of Birth",
           "ID Type",
           "ID Number",
-          "Citizenship",
-          "Blood Type"
+          "Citizenship"
         ],
         "Permanent Address": [
           "House Number",

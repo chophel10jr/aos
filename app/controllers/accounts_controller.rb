@@ -19,7 +19,7 @@ class AccountsController < ApplicationController
 
     if search_query.present?
       accounts_scope = accounts_scope.joins(:identity_details)
-                                     .where(identity_details: { id_no: search_query.strip })
+                                     .where(identity_details: { id_number: search_query.strip })
     end
 
     @accounts = accounts_scope.order(sort_order)

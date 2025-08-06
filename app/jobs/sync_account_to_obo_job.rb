@@ -186,7 +186,7 @@ class SyncAccountToOboJob < ApplicationJob
   end
 
   def current_address(account)
-    account.addresses.where(address_type: 'current').first
+    account.addresses.where(address_type: 'current').first || account.addresses.where(address_type: 'permanent').first
   end
 
   def spouse_detail(account)
