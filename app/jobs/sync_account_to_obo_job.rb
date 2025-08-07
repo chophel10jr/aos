@@ -214,7 +214,8 @@ class SyncAccountToOboJob < ApplicationJob
   end
 
   def account_documents(account, document_type)
-    account.account_documents.where(document_type: document_type)&.first&.base64_data
+    base64_data = account.account_documents.where(document_type: document_type)&.first&.base64_data
+    base64_data&.sub(/^data:image\/\w+;base64,/, '')
   end
 
   def convert_attachment_to_base64(attachment)
