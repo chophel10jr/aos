@@ -116,7 +116,6 @@ class AccountCreationService
   end
 
   def create_employment_detail
-    binding.pry
     return unless account.personal_detail&.employment_status != 'unemployed'
 
     account.personal_detail&.create_employment_detail!(

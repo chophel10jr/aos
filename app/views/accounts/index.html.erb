@@ -196,10 +196,14 @@
 
                 <div class="pl-3 flex">
                   <%= f.submit "Update Account", class: "bg-[rgb(37,45,96)] text-white font-bold py-2 px-4 rounded hover:bg-[rgb(30,40,85)]" %>
-                  <% unless account.obo_application_no.present? || account.status != "inprogress" %>
-                    <%= link_to "Push to OBO", sync_account_with_obo_path(id: account.id), method: :post, class: "bg-[rgb(37,45,96)] text-white font-bold py-2 px-4 rounded hover:bg-[rgb(30,40,85)] ml-2", data: { confirm: "Are you sure you want to sync this account?" } %>
-                  <% end %>
                 </div>
+              <% end %>
+              <% unless account.obo_application_no.present? || account.status != "inprogress" %>
+                <%= form_with url: sync_account_with_obo_path(id: account.id), method: :post do %>
+                  <%= submit_tag "Push to OBO",
+                        class: "bg-[rgb(37,45,96)] text-white font-bold py-2 px-4 rounded hover:bg-[rgb(30,40,85)] mt-5 ml-3",
+                        data: { turbo_confirm: "Are you sure?" } %>
+                <% end %>
               <% end %>
             </div>
           <% end %>
