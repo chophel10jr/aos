@@ -201,16 +201,12 @@ export default class extends Controller {
     const expiresOn = personalDetails.querySelector(
       'input[name="personal_detail[cid_expires_on]"]'
     );
-    const signature = personalDetailUploads.querySelector(
-      'input[name="personal_detail[signature]"]'
-    );
     const cidCopy = personalDetailUploads.querySelector(
       'input[name="personal_detail[cid_copy]"]'
     );
 
     if (
       !validIssueAndExpiresDate(issuedOn.value, expiresOn.value) ||
-      !validFileUpload(signature.files[0]) ||
       !validFileUpload(cidCopy.files[0])
     ) {
       allValid = false;

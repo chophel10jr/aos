@@ -116,27 +116,6 @@
 
     <div class="lg:grid lg:grid-cols-2 lg:gap-x-[24px]" data-stepper-target="personalDetailUploadContainer">
       <div class="mt-[8px]">
-        <span class="error-message" data-personal-detail-target="signatureError" style="color: red;"></span>
-        <label for="signature" class="flex items-center justify-center cursor-pointer border-2 border-dashed
-        border-bnb_blue relative rounded-[8px] h-[156px] mb-[4px]">
-          <div class="absolute inset-0 flex flex-col justify-center items-center">
-            <i class="material-symbols-outlined !text-[44px] text-bnb_red transform -rotate-[12deg]">signature</i>
-            <p class="mb-[8px] text-gray-500 mt-[12px] text-center">
-              Signature (PNG, JPG, max 2 MB)
-            </p>
-            <p class="text-bnb_blue text-[14px] mt-[8px]" id="signature-path"></p>
-
-          </div>
-          <%= pd.file_field :signature,
-            { id: "signature",
-              class: 'hidden',
-              name: "personal_detail[signature]",
-              data: { action: "input->personal-detail#validateSignature" } }%>
-        </label>
-        <img src="" alt="signature" height="110" width="110" class="object-contain absolute inset-0 hidden rounded-[8px]" data-personal-detail-target="signatureImage">
-      </div>
-
-      <div class="mt-[8px]">
         <span class="error-message" data-personal-detail-target="cidCopyError" style="color: red;"></span>
         <label for="cid_copy" class="flex items-center justify-center cursor-pointer border-2 border-dashed
         border-bnb_blue relative rounded-[8px] h-[156px] mb-[4px]">

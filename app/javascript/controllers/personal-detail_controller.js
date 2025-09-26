@@ -10,8 +10,6 @@ export default class extends Controller {
     "expireDate",
     "issuedOnError",
     "expiresOnError",
-    "signatureError",
-    "signatureImage",
     "cidCopyError",
     "cidCopyImage",
   ];
@@ -27,14 +25,6 @@ export default class extends Controller {
       : "Invalid Issued and Expires Date";
     this.issuedOnErrorTarget.textContent = message;
     this.expiresOnErrorTarget.textContent = message;
-  }
-
-  validateSignature(event) {
-    const file = event.target.files[0];
-    const display_path = document.getElementById("signature-path");
-    const message = validFileUpload(file) ? "" : "Invalid Signature";
-    this.signatureErrorTarget.textContent = message;
-    display_path.innerHTML = validFileUpload(file) ? file.name : "";
   }
 
   validateCidCopy(event) {

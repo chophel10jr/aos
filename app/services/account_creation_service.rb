@@ -135,16 +135,20 @@ class AccountCreationService
   end
 
   def create_account_document
-    ['signature', 'cid_copy'].each do |document_type|
-      base64 = EncodeBase64Service.new(uploaded_file: attachment_params[document_type]).run
-      account.account_documents.create!(
-        document_type: document_type,
-        base64_data: base64
-      )
-    end
+    cid_base64 = EncodeBase64Service.new(uploaded_file: attachment_params['cid_copy']).run
+    account.account_documents.create!(
+      document_type: 'cid_copy',
+      base64_data: cid_base64
+    )
+
     account.account_documents.create!(
       document_type: 'passport_photo',
       base64_data: @ndi_user['passport_size_photo']['passport_size_photo']
+    )
+
+    account.account_documents.create!(
+      document_type: 'signature',
+      base64_data: @ndi_user['e_signature']['e_signature']
     )
   end
 
@@ -153,7 +157,7 @@ class AccountCreationService
   end
   
   def attachment_params
-    params.require(:personal_detail).permit(:signature, :cid_copy)
+    params.require(:personal_detail).permit(:cid_copy)
   end
 
   def employment_detail_params

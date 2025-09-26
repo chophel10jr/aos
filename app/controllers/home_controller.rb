@@ -69,6 +69,9 @@ class HomeController < ApplicationController
         ],
         "Passport-Size Photo": [
           "Passport-Size Photo"
+        ],
+        "E-signature": [
+          "E-signature"
         ]
       }
     }
